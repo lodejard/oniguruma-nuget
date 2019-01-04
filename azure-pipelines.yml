@@ -52,3 +52,29 @@ jobs:
     vmImage: 'macOS-10.13'
   steps:
   - script: echo unknown
+
+- job: Package
+  dependsOn:
+  - Linux
+  - Windows
+  - MacOS
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      artifactName: build-win-x64
+      itemPattern: '**/*.dll'
+      downloadPath: $(System.ArtifactsDirectory)
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      artifactName: build-win-x86
+      itemPattern: '**/*.dll'
+      downloadPath: $(System.ArtifactsDirectory)
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      artifactName: build-linux
+      itemPattern: '**/*.so'
+      downloadPath: $(System.ArtifactsDirectory)
+  - script: ls -1R $(System.ArtifactsDirectory)
+  
