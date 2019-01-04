@@ -28,50 +28,26 @@ jobs:
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - script: |
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-      mkdir $(Build.ArtifactStagingDirectory)\win64
-      cd $(Build.ArtifactStagingDirectory)\win64
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat ctest
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat ptest
-    displayName: 'build win64'
+  - script: build-win.cmd x64
+    displayName: 'build win-x64'
 
   - task: PublishPipelineArtifact@0
-    displayName: 'publish win64'
+    displayName: 'publish win-x64'
     inputs:
-      artifactName: build-win32
-      targetPath: '$(Build.ArtifactStagingDirectory)\win64'
+      artifactName: build-win-x64
+      targetPath: '$(Build.ArtifactStagingDirectory)\win-x64'
 
-  - script: |
-      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
-      mkdir $(Build.ArtifactStagingDirectory)\win32
-      cd $(Build.ArtifactStagingDirectory)\win32
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat clean
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat ctest
-      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat ptest
-    displayName: 'build win32'
+  - script: build-win.cmd x86
+    displayName: 'build win-x86'
 
   - task: PublishPipelineArtifact@0
-    displayName: 'publish win32'
+    displayName: 'publish win-x86'
     inputs:
-      artifactName: build-win32
-      targetPath: '$(Build.ArtifactStagingDirectory)\win32'
+      artifactName: build-win-x86
+      targetPath: '$(Build.ArtifactStagingDirectory)\win-x86'
 
 - job: MacOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - script: |
-      cd 3rdparty/oniguruma
-      autoreconf -vfi
-      ./configure
-      make
-    displayName: 'build macos'
-
-  - task: PublishPipelineArtifact@0
-    displayName: 'publish macos'
-    inputs:
-      artifactName: build-macos
-      targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
+  - script: echo unknown
