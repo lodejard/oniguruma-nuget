@@ -11,22 +11,23 @@ jobs:
   pool:
     vmImage: 'Ubuntu-16.04'
   steps:
-  - displayName: 'Build'
-    script: |
+  - script: |
       echo Hello, world!
+    displayName: 'Build'
 
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
-  - displayName: 'Build'
-    script: |
+  - script: |
       echo Hello, world!
+    displayName: 'Build'
 
 - job: MacOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
-  - displayName: 'Build'
-    script: |
+  - script: |
       echo Hello, world!
+    displayName: 'Build'
+    
