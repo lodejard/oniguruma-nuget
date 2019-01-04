@@ -16,6 +16,7 @@ jobs:
       autoreconf -vfi
       ./configure
       make
+      make all-test
     displayName: 'build linux'
 
   - task: PublishPipelineArtifact@0
