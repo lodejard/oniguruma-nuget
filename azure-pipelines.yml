@@ -73,5 +73,5 @@ jobs:
     inputs:
       artifactName: build-linux
       targetPath: $(System.ArtifactsDirectory)/linux
-  - script: ls -1R $(System.ArtifactsDirectory)
+  - script: dotnet pack $(Build.SourcesDirectory)/onigurama/onigurama.csproj
   
