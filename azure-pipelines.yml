@@ -12,7 +12,10 @@ jobs:
     vmImage: 'Ubuntu-16.04'
   steps:
   - script: |
-      echo Hello, world!
+      cd 3rdparty/oniguruma
+      autoreconf -vfi
+      ./configure
+      make
     displayName: 'Build'
 
 - job: Windows
@@ -20,8 +23,19 @@ jobs:
     vmImage: 'vs2017-win2016'
   steps:
   - script: |
-      echo Hello, world!
-    displayName: 'Build'
+      mkdir $(Build.ArtifactStagingDirectory)\\win64
+      cd $(Build.ArtifactStagingDirectory)\\win64
+      $(Build.SourcesDirectory)\\make_win64.bat
+      mkdir $(Build.ArtifactStagingDirectory)\\win32
+      $(Build.SourcesDirectory)\\make_win32.bat
+    displayName: 'Build win64'
+  - script: |
+      mkdir $(Build.ArtifactStagingDirectory)\\win64
+      cd $(Build.ArtifactStagingDirectory)\\win64
+      $(Build.SourcesDirectory)\\make_win64.bat
+      mkdir $(Build.ArtifactStagingDirectory)\\win32
+      $(Build.SourcesDirectory)\\make_win32.bat
+    displayName: 'Build win32'
 
 - job: MacOS
   pool:
@@ -30,4 +44,4 @@ jobs:
   - script: |
       echo Hello, world!
     displayName: 'Build'
-    
+
