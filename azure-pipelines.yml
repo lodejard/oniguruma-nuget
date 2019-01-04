@@ -21,7 +21,7 @@ jobs:
     displayName: 'Publish'
     inputs:
       artifactName: build-linux
-      targetPath: '$(Build.SourcesDirectory)\\3rdparty\\oniguruma\\src\\.libs'
+      targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
 
 - job: Windows
   pool:
@@ -29,8 +29,8 @@ jobs:
   steps:
   - script: |
       DIR "C:\Program Files (x86)\Microsoft Visual Studio"
-      DIR "C:\Program Files (x86)\Microsoft Visual Studio\Enterprise"
-      call "C:\Program Files (x86)\Microsoft Visual Studio\Enterprise\2017\VC\Auxiliary\Build\vcvarsall.bat" x64
+      DIR "C:\Program Files (x86)\Microsoft Visual Studio\2017"
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
       mkdir $(Build.ArtifactStagingDirectory)\\win64
       cd $(Build.ArtifactStagingDirectory)\\win64
       $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win64.bat
