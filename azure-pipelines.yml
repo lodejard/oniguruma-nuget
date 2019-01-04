@@ -36,7 +36,7 @@ jobs:
     displayName: 'publish win-x64'
     inputs:
       artifactName: build-win-x64
-      targetPath: '$(Build.ArtifactStagingDirectory)\win-x64'
+      targetPath: '$(Build.ArtifactStagingDirectory)/win-x64'
 
   - script: build-win.cmd x86
     displayName: 'build win-x86'
@@ -45,7 +45,7 @@ jobs:
     displayName: 'publish win-x86'
     inputs:
       artifactName: build-win-x86
-      targetPath: '$(Build.ArtifactStagingDirectory)\win-x86'
+      targetPath: '$(Build.ArtifactStagingDirectory)/win-x86'
 
 - job: MacOS
   pool:
@@ -64,14 +64,14 @@ jobs:
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x64
-      targetPath: $(System.ArtifactsDirectory)
+      targetPath: $(System.ArtifactsDirectory)/win-x64
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x86
-      targetPath: $(System.ArtifactsDirectory)
+      targetPath: $(System.ArtifactsDirectory)/win-x86
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-linux
-      targetPath: $(System.ArtifactsDirectory)
+      targetPath: $(System.ArtifactsDirectory)/linux
   - script: ls -1R $(System.ArtifactsDirectory)
   

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>0.1</VersionPrefix>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SYSTEM_ARTIFACTSDIRECTORY Condition=" '$(SYSTEM_ARTIFACTSDIRECTORY)' == '' ">../bin</SYSTEM_ARTIFACTSDIRECTORY>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/win-x86/onig.dll" Pack="true" PackagePath="runtimes/win-x86/native/onig.dll" />
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/win-x64/onig.dll" Pack="true" PackagePath="runtimes/win-x64/native/onig.dll" />
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/linux/libonig.so" Pack="true" PackagePath="runtimes/debian-x64/native/libonig.so" />
+  </ItemGroup>
+
+</Project>
