@@ -25,16 +25,12 @@ jobs:
   - script: |
       mkdir $(Build.ArtifactStagingDirectory)\\win64
       cd $(Build.ArtifactStagingDirectory)\\win64
-      $(Build.SourcesDirectory)\\make_win64.bat
-      mkdir $(Build.ArtifactStagingDirectory)\\win32
-      $(Build.SourcesDirectory)\\make_win32.bat
+      $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win64.bat
     displayName: 'Build win64'
   - script: |
-      mkdir $(Build.ArtifactStagingDirectory)\\win64
-      cd $(Build.ArtifactStagingDirectory)\\win64
-      $(Build.SourcesDirectory)\\make_win64.bat
       mkdir $(Build.ArtifactStagingDirectory)\\win32
-      $(Build.SourcesDirectory)\\make_win32.bat
+      cd $(Build.ArtifactStagingDirectory)\\win32
+      $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win32.bat
     displayName: 'Build win32'
 
 - job: MacOS
