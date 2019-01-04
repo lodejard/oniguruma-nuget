@@ -17,11 +17,12 @@ jobs:
       ./configure
       make
     displayName: 'Build'
-  - task: PublishBuildArtifacts@1
+  - task: PublishPipelineArtifact@0
     displayName: 'Publish'
-    artifactName: build-linux
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)\\3rdparty\\oniguruma\\src\\.libs'
+      artifactName: build-linux
+      targetPath: '$(Build.SourcesDirectory)\\3rdparty\\oniguruma\\src\\.libs'
+
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
