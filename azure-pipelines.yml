@@ -16,9 +16,10 @@ jobs:
       autoreconf -vfi
       ./configure
       make
-    displayName: 'Build'
+    displayName: 'build linux'
+
   - task: PublishPipelineArtifact@0
-    displayName: 'Publish'
+    displayName: 'publish linux'
     inputs:
       artifactName: build-linux
       targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
@@ -28,25 +29,49 @@ jobs:
     vmImage: 'vs2017-win2016'
   steps:
   - script: |
-      DIR "C:\Program Files (x86)\Microsoft Visual Studio"
-      DIR "C:\Program Files (x86)\Microsoft Visual Studio\2017"
       call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
-      mkdir $(Build.ArtifactStagingDirectory)\\win64
-      cd $(Build.ArtifactStagingDirectory)\\win64
-      $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win64.bat
-    displayName: 'Build win64'
+      mkdir $(Build.ArtifactStagingDirectory)\win64
+      cd $(Build.ArtifactStagingDirectory)\win64
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat ctest
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win64.bat ptest
+    displayName: 'build win64'
+
+  - task: PublishPipelineArtifact@0
+    displayName: 'publish win64'
+    inputs:
+      artifactName: build-win32
+      targetPath: '$(Build.ArtifactStagingDirectory)\win64'
+
   - script: |
-      call %VSINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat x86
-      mkdir $(Build.ArtifactStagingDirectory)\\win32
-      cd $(Build.ArtifactStagingDirectory)\\win32
-      $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win32.bat
-    displayName: 'Build win32'
+      call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x86
+      mkdir $(Build.ArtifactStagingDirectory)\win32
+      cd $(Build.ArtifactStagingDirectory)\win32
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat clean
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat ctest
+      call $(Build.SourcesDirectory)\3rdparty\oniguruma\make_win32.bat ptest
+    displayName: 'build win32'
+
+  - task: PublishPipelineArtifact@0
+    displayName: 'publish win32'
+    inputs:
+      artifactName: build-win32
+      targetPath: '$(Build.ArtifactStagingDirectory)\win32'
 
 - job: MacOS
   pool:
     vmImage: 'macOS-10.13'
   steps:
   - script: |
-      echo Hello, world!
-    displayName: 'Build'
+      cd 3rdparty/oniguruma
+      autoreconf -vfi
+      ./configure
+      make
+    displayName: 'build macos'
 
+  - task: PublishPipelineArtifact@0
+    displayName: 'publish macos'
+    inputs:
+      artifactName: build-macos
+      targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
