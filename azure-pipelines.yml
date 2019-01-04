@@ -17,17 +17,24 @@ jobs:
       ./configure
       make
     displayName: 'Build'
-
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish'
+    artifactName: build-linux
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)\\3rdparty\\oniguruma\\src\\.libs'
 - job: Windows
   pool:
     vmImage: 'vs2017-win2016'
   steps:
   - script: |
+      SET
+      call %VSINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat x64
       mkdir $(Build.ArtifactStagingDirectory)\\win64
       cd $(Build.ArtifactStagingDirectory)\\win64
       $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win64.bat
     displayName: 'Build win64'
   - script: |
+      call %VSINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat x86
       mkdir $(Build.ArtifactStagingDirectory)\\win32
       cd $(Build.ArtifactStagingDirectory)\\win32
       $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win32.bat
