@@ -6,14 +6,27 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+jobs:
+- job: Linux
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+  - displayName: 'Build'
+    script: |
+      echo Hello, world!
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- job: Windows
+  pool:
+    vmImage: 'vs2017-win2016'
+  steps:
+  - displayName: 'Build'
+    script: |
+      echo Hello, world!
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- job: MacOS
+  pool:
+    vmImage: 'macOS-10.13'
+  steps:
+  - displayName: 'Build'
+    script: |
+      echo Hello, world!
