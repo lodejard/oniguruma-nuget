@@ -28,8 +28,9 @@ jobs:
     vmImage: 'vs2017-win2016'
   steps:
   - script: |
-      SET
-      call %VSINSTALLDIR%\\Auxiliary\\Build\\vcvarsall.bat x64
+      DIR "C:\Program Files (x86)\Microsoft Visual Studio"
+      DIR "C:\Program Files (x86)\Microsoft Visual Studio\Enterprise"
+      call "C:\Program Files (x86)\Microsoft Visual Studio\Enterprise\2017\VC\Auxiliary\Build\vcvarsall.bat" x64
       mkdir $(Build.ArtifactStagingDirectory)\\win64
       cd $(Build.ArtifactStagingDirectory)\\win64
       $(Build.SourcesDirectory)\\3rdparty\\oniguruma\\make_win64.bat
