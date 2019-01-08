@@ -77,12 +77,14 @@ jobs:
   - script: dotnet pack package -o $(System.ArtifactStagingDirectory)/packages
   
   - task: PublishPipelineArtifact@0
-    displayName: 'publish drop'
+    displayName: 'publish packages'
     inputs:
       artifactName: packages
       targetPath: $(Build.ArtifactStagingDirectory)/packages
 
   - task: NuGetCommand@2
+    displayName: 'push packages'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     command: push
     packagesToPush: $(Build.ArtifactStagingDirectory)/packages/*.nupkg;!$(Build.ArtifactStagingDirectory)/packages/*.symbols.nupkg
     nuGetFeedType: external
