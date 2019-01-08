@@ -9,7 +9,7 @@ trigger:
 jobs:
 - job: Linux
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: Ubuntu-16.04
   steps:
   - script: |
       cd 3rdparty/oniguruma
@@ -17,39 +17,39 @@ jobs:
       ./configure
       make
       make all-test
-    displayName: 'build linux'
+    displayName: build linux
 
   - task: PublishPipelineArtifact@0
-    displayName: 'publish linux'
+    displayName: publish linux
     inputs:
       artifactName: build-linux
-      targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
+      targetPath: $(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs
 
 - job: Windows
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: vs2017-win2016
   steps:
   - script: build-win.cmd x64
-    displayName: 'build win-x64'
+    displayName: build win-x64
 
   - task: PublishPipelineArtifact@0
-    displayName: 'publish win-x64'
+    displayName: publish win-x64
     inputs:
       artifactName: build-win-x64
-      targetPath: '$(Build.ArtifactStagingDirectory)/win-x64'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x64
 
   - script: build-win.cmd x86
-    displayName: 'build win-x86'
+    displayName: build win-x86
 
   - task: PublishPipelineArtifact@0
-    displayName: 'publish win-x86'
+    displayName: publish win-x86
     inputs:
       artifactName: build-win-x86
-      targetPath: '$(Build.ArtifactStagingDirectory)/win-x86'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x86
 
 - job: MacOS
   pool:
-    vmImage: 'macOS-10.13'
+    vmImage: macOS-10.13
   steps:
   - script: echo unknown
 
@@ -59,31 +59,31 @@ jobs:
   - Windows
   - MacOS
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: Ubuntu-16.04
   steps:
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x64
-      targetPath: '$(System.ArtifactStagingDirectory)/win-x64'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x64
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x86
-      targetPath: '$(System.ArtifactStagingDirectory)/win-x86'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x86
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-linux
-      targetPath: '$(System.ArtifactStagingDirectory)/linux'
+      targetPath: $(Build.ArtifactStagingDirectory)/linux
   
-  - script: dotnet pack package -o $(System.ArtifactStagingDirectory)/packages
+  - script: dotnet pack package -o $(Build.ArtifactStagingDirectory)/packages
   
   - task: PublishPipelineArtifact@0
-    displayName: 'publish packages'
+    displayName: publish packages
     inputs:
       artifactName: packages
-      targetPath: '$(Build.ArtifactStagingDirectory)/packages'
+      targetPath: $(Build.ArtifactStagingDirectory)/packages
 
   # - task: NuGetCommand@2
-  #   displayName: 'push packages'
+  #   displayName: push packages
   #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   #   inputs:
   #     command: push
