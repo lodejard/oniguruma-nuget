@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Onigurama</PackageId>
+    <VersionPrefix>0.1</VersionPrefix>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <NoWarn>CS7034;CS7035</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Onigurama</Title>
+    <Authors>kkos;lodejard</Authors>
+    <Description>
+      Oniguruma is a modern and flexible regular expressions library. It
+      encompasses features from different regular expression implementations
+      that traditionally exist in different languages.
+    </Description>
+    <Copyright>Copyright (c) 2002-2018  K.Kosako  &lt;kkosako0@gmail.com&gt;</Copyright>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/kkos/oniguruma</PackageProjectUrl>
+    <PackageTags>onigurama;regex;native</PackageTags>
+    <RepositoryUrl>https://github.com/kkos/oniguruma.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <VersionPrefix Condition=" '$(BUILD_BUILDID)' != '' ">$(VersionPrefix).$(BUILD_BUILDID)</VersionPrefix>
+    <SYSTEM_ARTIFACTSDIRECTORY Condition=" '$(SYSTEM_ARTIFACTSDIRECTORY)' == '' ">../bin</SYSTEM_ARTIFACTSDIRECTORY>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/win-x86/onig.dll" Pack="true" PackagePath="runtimes/win-x86/native/onig.dll" />
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/win-x64/onig.dll" Pack="true" PackagePath="runtimes/win-x64/native/onig.dll" />
+    <None Include="$(SYSTEM_ARTIFACTSDIRECTORY)/linux/libonig.so" Pack="true" PackagePath="runtimes/debian-x64/native/libonig.so" />
+    <None Include="../LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

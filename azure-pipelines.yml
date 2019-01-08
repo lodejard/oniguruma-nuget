@@ -23,7 +23,7 @@ jobs:
     displayName: 'publish linux'
     inputs:
       artifactName: build-linux
-      targetPath: '$(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs'
+      targetPath: $(Build.SourcesDirectory)/3rdparty/oniguruma/src/.libs
 
 - job: Windows
   pool:
@@ -36,7 +36,7 @@ jobs:
     displayName: 'publish win-x64'
     inputs:
       artifactName: build-win-x64
-      targetPath: '$(Build.ArtifactStagingDirectory)/win-x64'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x64
 
   - script: build-win.cmd x86
     displayName: 'build win-x86'
@@ -45,7 +45,7 @@ jobs:
     displayName: 'publish win-x86'
     inputs:
       artifactName: build-win-x86
-      targetPath: '$(Build.ArtifactStagingDirectory)/win-x86'
+      targetPath: $(Build.ArtifactStagingDirectory)/win-x86
 
 - job: MacOS
   pool:
@@ -73,5 +73,9 @@ jobs:
     inputs:
       artifactName: build-linux
       targetPath: $(System.ArtifactsDirectory)/linux
-  - script: dotnet pack $(Build.SourcesDirectory)/onigurama/onigurama.csproj
-  
+  - script: dotnet pack package -o $(System.ArtifactsDirectory)/packages
+  - task: PublishPipelineArtifact@0
+    displayName: 'publish drop'
+    inputs:
+      artifactName: packages
+      targetPath: $(Build.ArtifactStagingDirectory)/packages
