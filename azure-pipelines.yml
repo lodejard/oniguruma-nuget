@@ -64,18 +64,26 @@ jobs:
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x64
-      targetPath: $(System.ArtifactsDirectory)/win-x64
+      targetPath: $(System.ArtifactStagingDirectory)/win-x64
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-win-x86
-      targetPath: $(System.ArtifactsDirectory)/win-x86
+      targetPath: $(System.ArtifactStagingDirectory)/win-x86
   - task: DownloadPipelineArtifact@0
     inputs:
       artifactName: build-linux
-      targetPath: $(System.ArtifactsDirectory)/linux
-  - script: dotnet pack package -o $(System.ArtifactsDirectory)/packages
+      targetPath: $(System.ArtifactStagingDirectory)/linux
+  
+  - script: dotnet pack package -o $(System.ArtifactStagingDirectory)/packages
+  
   - task: PublishPipelineArtifact@0
     displayName: 'publish drop'
     inputs:
       artifactName: packages
       targetPath: $(Build.ArtifactStagingDirectory)/packages
+
+  - task: NuGetCommand@2
+    command: push
+    packagesToPush: $(Build.ArtifactStagingDirectory)/packages/*.nupkg;!$(Build.ArtifactStagingDirectory)/packages/*.symbols.nupkg
+    nuGetFeedType: external
+    externalEndpoint: myget-oniguruma

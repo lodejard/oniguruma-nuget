@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Onigurama</PackageId>
+    <PackageId>Oniguruma</PackageId>
     <VersionPrefix>0.1</VersionPrefix>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>Onigurama</Title>
+    <Title>Oniguruma</Title>
     <Authors>kkos;lodejard</Authors>
     <Description>
       Oniguruma is a modern and flexible regular expressions library. It
@@ -21,7 +21,7 @@
     <Copyright>Copyright (c) 2002-2018  K.Kosako  &lt;kkosako0@gmail.com&gt;</Copyright>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/kkos/oniguruma</PackageProjectUrl>
-    <PackageTags>onigurama;regex;native</PackageTags>
+    <PackageTags>oniguruma;regex;native</PackageTags>
     <RepositoryUrl>https://github.com/kkos/oniguruma.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
