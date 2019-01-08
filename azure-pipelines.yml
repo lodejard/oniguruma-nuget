@@ -82,11 +82,11 @@ jobs:
       artifactName: packages
       targetPath: $(Build.ArtifactStagingDirectory)/packages
 
-  - task: NuGetCommand@2
-    displayName: 'push packages'
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    inputs:
-      command: push
-      packagesToPush: $(Build.ArtifactStagingDirectory)/packages/*.nupkg;!$(Build.ArtifactStagingDirectory)/packages/*.symbols.nupkg
-      nuGetFeedType: external
-      externalEndpoint: myget-oniguruma
+  # - task: NuGetCommand@2
+  #   displayName: 'push packages'
+  #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  #   inputs:
+  #     command: push
+  #     packagesToPush: $(Build.ArtifactStagingDirectory)/packages/*.nupkg;!$(Build.ArtifactStagingDirectory)/packages/*.symbols.nupkg
+  #     nuGetFeedType: external
+  #     externalEndpoint: myget-oniguruma
